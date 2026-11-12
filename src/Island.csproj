@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Island</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <UseWPF>True</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateTargetPlatformAttribute>false</GenerateTargetPlatformAttribute>
+    <WindowsSdkPackageVersion>10.0.19041.57</WindowsSdkPackageVersion>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <Configurations>Debug;Release;DeveloperPro</Configurations>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>14.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IslandDeveloperBuild)' == 'true'">
+    <DefineConstants>$(DefineConstants);ISLAND_DEVELOPER_BUILD</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IslandSocialHub)' == 'true'">
+    <DefineConstants>$(DefineConstants);ISLAND_SOCIAL_HUB</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'DeveloperPro'">
+    <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
+    <DefineConstants>$(DefineConstants);RELEASE;ISLAND_DEVELOPER_BUILD;ISLAND_DEVELOPER_PRO</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Remove="Island\App.xaml" />
+    <ApplicationDefinition Include="Island\App.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app.xaml" />
+    <Page Remove="Island\EventDialog.xaml" />
+    <Page Remove="Island\MainWindow.xaml" />
+    <Page Remove="Island\SettingsWindow.xaml" />
+    <Page Remove="theme.xaml" />
+    <Page Include="Island\EventDialog.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="eventdialog.xaml" />
+    <Page Include="Island\MainWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="mainwindow.xaml" />
+    <Page Include="Island\SettingsWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="settingswindow.xaml" />
+    <Page Include="theme.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="theme.xaml" />
+    <Resource Remove="assets\fonts\aminahsschoolbooksansserif-bold.ttf" />
+    <Resource Remove="assets\fonts\schuelersuperhyperxpplus-bold.ttf" />
+    <Resource Remove="assets\island-halloween.ico" />
+    <Resource Remove="assets\island.ico" />
+    <Resource Include="assets\fonts\aminahsschoolbooksansserif-bold.ttf" LogicalName="assets/fonts/aminahsschoolbooksansserif-bold.ttf" />
+    <Resource Include="assets\fonts\schuelersuperhyperxpplus-bold.ttf" LogicalName="assets/fonts/schuelersuperhyperxpplus-bold.ttf" />
+    <Resource Include="assets\island-halloween.ico" LogicalName="assets/island-halloween.ico" />
+    <Resource Include="assets\island.ico" LogicalName="assets/island.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="4.0.0" />
+    <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+    <PackageReference Include="QRCoder" Version="1.6.0" />
+    <PackageReference Include="System.Management" Version="9.0.0" />
+  </ItemGroup>
+</Project>

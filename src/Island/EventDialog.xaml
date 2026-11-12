@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="Island.EventDialog" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Новое событие" Width="440" SizeToContent="Height" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Topmost="True" Background="{StaticResource T.Bg}" Foreground="{StaticResource T.Text}" FontFamily="{StaticResource T.Font}" FontSize="13" UseLayoutRounding="True" Icon="pack://application:,,,/Assets/island.ico" xmlns:island="clr-namespace:Island;assembly=Island">
+  <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="44" ResizeBorderThickness="0" GlassFrameThickness="1" CornerRadius="0" UseAeroCaptionButtons="False" />
+  </WindowChrome.WindowChrome>
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="DayCell" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="BorderBrush" Value="#00FFFFFF" />
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Button}">
+              <Border Name="Bg" Background="{TemplateBinding Control.Background}" BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="1.5" CornerRadius="9" Margin="2">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="UIElement.IsMouseOver" Value="True">
+                  <Setter TargetName="Bg" Property="UIElement.Opacity" Value="0.85" />
+                </Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+      <Style x:Key="Label" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource T.Text2}" />
+        <Setter Property="Margin" Value="2,16,0,6" />
+      </Style>
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Border BorderBrush="{StaticResource T.Border}" BorderThickness="1">
+    <StackPanel>
+      <Grid Height="44">
+        <StackPanel Orientation="Horizontal" Margin="20,0,0,0" VerticalAlignment="Center">
+          <Border Width="26" Height="26" CornerRadius="7" Background="{StaticResource T.AccentSoft}">
+            <TextBlock Text="" FontFamily="{StaticResource T.Icons}" FontSize="12" Foreground="{StaticResource T.Accent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <TextBlock Text="Новое событие" FontSize="14" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center" />
+        </StackPanel>
+        <Button Style="{StaticResource T.CloseButton}" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Height="44" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Закрыть" Click="Cancel_Click" />
+      </Grid>
+      <StackPanel Margin="20,2,20,20">
+        <TextBox Name="TitleBox" Style="{StaticResource T.TextBox}" Tag="Название события" FontSize="15" Padding="12,10" />
+        <TextBlock Text="Дата" Style="{StaticResource Label}" />
+        <Border Background="{StaticResource T.Card}" CornerRadius="14" Padding="10,8,10,10" BorderBrush="{StaticResource T.Border}" BorderThickness="1">
+          <StackPanel>
+            <Grid Margin="4,0,0,6">
+              <TextBlock Name="MonthTitle" FontSize="13.5" FontWeight="SemiBold" VerticalAlignment="Center" />
+              <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource T.GhostButton}" Padding="9,5" FontFamily="{StaticResource T.Icons}" FontSize="11" Content="" ToolTip="Предыдущий месяц" Click="PrevMonth_Click" />
+                <Button Style="{StaticResource T.GhostButton}" Padding="9,5" FontSize="12" Content="Сегодня" Click="Today_Click" />
+                <Button Style="{StaticResource T.GhostButton}" Padding="9,5" FontFamily="{StaticResource T.Icons}" FontSize="11" Content="" ToolTip="Следующий месяц" Click="NextMonth_Click" />
+              </StackPanel>
+            </Grid>
+            <UniformGrid Name="WeekdayRow" Columns="7" Margin="0,0,0,2" />
+            <UniformGrid Name="DaysGrid" Columns="7" Rows="6" />
+          </StackPanel>
+        </Border>
+        <TextBlock Text="Тип" Style="{StaticResource Label}" />
+        <WrapPanel>
+          <RadioButton Name="KindTimed" Style="{StaticResource T.Chip}" GroupName="kind" Content="Со временем" IsChecked="True" Checked="Kind_Checked" />
+          <RadioButton Name="KindAllDay" Style="{StaticResource T.Chip}" GroupName="kind" Content="Весь день" Checked="Kind_Checked" />
+        </WrapPanel>
+        <StackPanel Name="TimePanel">
+          <Grid Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+              <TextBlock Text="Начало" Style="{StaticResource Label}" Margin="2,0,0,6" />
+              <TextBox Name="TimeBox" Style="{StaticResource T.TextBox}" Width="96" Text="10:00" FontSize="14" TextChanged="TimeBox_TextChanged" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="20,0,0,0">
+              <Grid Margin="2,0,0,6">
+                <TextBlock Text="Длительность" Style="{StaticResource Label}" Margin="0" />
+                <TextBlock Name="DurationText" HorizontalAlignment="Right" FontWeight="SemiBold" Foreground="{StaticResource T.Text}" />
+              </Grid>
+              <Slider Name="DurationSlider" Style="{StaticResource T.Slider}" Minimum="15" Maximum="480" Value="60" SmallChange="15" LargeChange="60" Margin="0,4,0,0" ValueChanged="DurationSlider_ValueChanged" />
+            </StackPanel>
+          </Grid>
+          <WrapPanel Name="TimeChips" Margin="0,10,0,0" />
+        </StackPanel>
+        <TextBlock Text="Ссылка на созвон или страницу" Style="{StaticResource Label}" />
+        <TextBox Name="LinkBox" Style="{StaticResource T.TextBox}" Tag="https://meet.google.com/…  (необязательно)" />
+        <TextBlock Name="ErrorText" Foreground="{StaticResource T.Danger}" FontSize="12" Margin="2,10,0,0" Visibility="Collapsed" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
+          <Button Style="{StaticResource T.GhostButton}" Content="Отмена" IsCancel="True" Click="Cancel_Click" />
+          <Button Style="{StaticResource T.AccentButton}" Content="Добавить событие" IsDefault="True" Margin="8,0,0,0" Click="Save_Click" />
+        </StackPanel>
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</Window>

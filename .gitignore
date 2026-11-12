@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+.vs/
+*.user
+artifacts/
+**/DeveloperProProfile/
+**/SocialHubProfile/
+**/ReviewProfile/
+*.pfx
+*.p12
+*.dpapi
+*.key
+.env
+.env.*
+*.log
